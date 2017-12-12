@@ -1,4 +1,5 @@
 ##Stores all the functions used for the Homepage of Analytics Dashboard. 
+##Stores all the functions used for the Homepage of Analytics Dashboard. 
 library(pander)
 library(markdown)
 library(stringr)
@@ -166,34 +167,34 @@ analyst_stacked_bar_3<-function(retrieved_data){
 
 ##This function takes the table from Mongodb and turns it into a color-coded summary datatable
 summary_box_1<-function(retrieved_data){
-  df<-retrieved_data[,c('constituent','Twitter_sentiment','News_sentiment','Profitability','Risk')]
-  df<-df[order(df$constituent),]
+  df<-retrieved_data[,c('Constituent','Twitter_sent_color','News_sent_color','Profitability_color','Risk_color')]
   df<-df[1:10,]
+  df[df$Constituent=='adidas',c('Constituent')] = 'Adidas'
   datatable(df,options=list(dom='t'),rownames = FALSE,colnames = c('Twitter Sentiment', 'News Sentiment','Profitability', 'Risk')) %>%
-    formatStyle(c('Profitability','Risk','Twitter_sentiment','News_sentiment'),
+    formatStyle(c('Twitter_sent_color','News_sent_color','Profitability_color','Risk_color'),
                 color = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')),
                 backgroundColor = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')))}
 
 
 summary_box_2<-function(retrieved_data){
-  df<-retrieved_data[,c('constituent','Twitter_sentiment','News_sentiment','Profitability','Risk')]
-  df<-df[order(df$constituent),]
+  df<-retrieved_data[,c('Constituent','Twitter_sent_color','News_sent_color','Profitability_color','Risk_color')]
   df<-df[11:20,]
-  df<-df[df$constituent!='Henkel vz',]
-  df<-df[df$constituent!='Linde',]
+  #df<-df[df$constituent!='Henkel vz',]
+  #df<-df[df$constituent!='Linde',]
   datatable(df,options=list(dom='t'),rownames = FALSE,colnames = c('Twitter Sentiment', 'News Sentiment','Profitability', 'Risk')) %>%
-    formatStyle(c('Profitability','Risk','Twitter_sentiment','News_sentiment'),
+    formatStyle(c('Twitter_sent_color','News_sent_color','Profitability_color','Risk_color'),
                 color = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')),
                 backgroundColor = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')))}
 
 summary_box_3<-function(retrieved_data){
-  df<-retrieved_data[,c('constituent','Twitter_sentiment','News_sentiment','Profitability','Risk')]
-  df<-df[order(df$constituent),]
-  df<-df[df$constituent!='Volkswagen (VW) vz',]
-  df<-df[df$constituent!='Münchener Rückversicherungs-Gesellschaft',]
+  df<-retrieved_data[,c('Constituent','Twitter_sent_color','News_sent_color','Profitability_color','Risk_color')]
+  #df<-df[df$constituent!='Volkswagen (VW) vz',]
+  #df<-df[df$constituent!='Münchener Rückversicherungs-Gesellschaft',]
   #df[df$constituent == 'Münchener Rückversicherungs-Gesellschaft',c('constituent')]='Münchener RG'
   df<-df[21:nrow(df),]
+  df[df$constituent!='thyssenkrupp',c('Constituent')] = 'Thyssenkrupp'
+  df[df$constituent!='Volkswagen (VW) vz',c('Constituent')] = 'Volkswagen'
   datatable(df,options=list(dom='t'),rownames = FALSE,colnames = c('Twitter Sentiment', 'News Sentiment','Profitability', 'Risk')) %>%
-    formatStyle(c('Profitability','Risk','Twitter_sentiment','News_sentiment'),
+    formatStyle(c('Twitter_sent_color','News_sent_color','Profitability_color','Risk_color'),
                 color = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')),
                 backgroundColor = styleInterval(c(-1,0),c('red','#FFCC00','#1E8449')))}
